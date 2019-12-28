@@ -1,0 +1,55 @@
+version: '3'
+services:
+  postgres:
+    image:  'postgres:latest'
+  
+  redis:
+    image: 'redis:latest'
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis # the value is same as name of redis service
+      - REDIST_PORT=6379 # check documents on hub.docker to get values
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+      - CHOKIDAR_USEPOLLING=true
+    depends_on: # depend on some services and will start the dependency order. For EX: postgres => api
+      - postgres
+
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis # the value is same as name of redis service
+      - REDIST_PORT=6379 # check documents on hub.docker to get values
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:80"
