@@ -10,9 +10,9 @@ script:
 
 after_success: # build production image 
   - docker build -t nqthai/multi-client-sample ./client
-  - docker build -t nqthai-multi-nginx-sample ./nginx
-  - docker build -t nqthai-multi-server-sample ./server
-  - docker build -t nqthai-multi-worker-sample ./worker
+  - docker build -t nqthai/multi-nginx-sample ./nginx
+  - docker build -t nqthai/multi-server-sample ./server
+  - docker build -t nqthai/multi-worker-sample ./worker
 #Login into docker cli
 # add username password to travis env
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
