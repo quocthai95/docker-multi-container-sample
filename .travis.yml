@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t nqthai/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true nqthai/react-test npm run test
+
+after_success: # build production image 
+  - docker build -t nqthai/multi-client-sample ./client
+  - docker build -t nqthai-multi-nginx-sample ./nginx
+  - docker build -t nqthai-multi-server-sample ./server
+  - docker build -t nqthai-multi-worker-sample ./worker
+#Login into docker cli
+# add username password to travis env
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# take those images and push to docker hub
+  - docker push nqthai/multi-client-sample
+  - docker push nqthai/multi-nginx-sample
+  - docker push nqthai/multi-server-sample
+  - docker push nqthai/multi-worker-sample
