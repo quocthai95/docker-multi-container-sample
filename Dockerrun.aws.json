@@ -4,14 +4,13 @@
     {
       "name": "client",
       "image": "nqthai95/multi-client-sample", 
-      "hostname": "client", // the name which let other containers can access to it. 
-      //You can skip hostname if you don't need to expose this container to others
-      "essential": false // if true, if this container is crashed. All remaining containers will be shut down too.
+      "hostname": "client", 
+      "essential": false 
     },
     {
       "name": "server",
       "image": "nqthai95/multi-server-sample", 
-      "hostname": "api", // the name which nginx will look for
+      "hostname": "api", 
       "essential": false
     },
     {
@@ -25,12 +24,11 @@
       "essential": true,
       "portMappings": [
         {
-          "hostPort": 80, // open up hostPort on machine
+          "hostPort": 80,
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"] // form up links between containers.
-      //  The linked container name in this array map to the name of container definition (not hostname).
+      "links": ["client", "server"]
     }
   ]
 }
