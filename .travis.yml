@@ -23,11 +23,11 @@ after_success: # build production image
   - docker push nqthai95/multi-worker-sample
 deploy:
   provider: elasticbeanstalk
-  region: ap-southeast-1
-  app: multi-docker
-  environment: MultiDocker-env
-  bucket_name: elasticbeanstalk-ap-southeast-1-433126474652
-  bucket_path: multi-docker
+  region: "ap-southeast-1"
+  app: "multi-docker"
+  environment: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-ap-southeast-1-433126474652"
+  bucket_path: "multi-docker"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
