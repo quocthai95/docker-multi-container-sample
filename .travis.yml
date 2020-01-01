@@ -24,10 +24,10 @@ after_success: # build production image
 deploy:
   provider: elasticbeanstalk
   region: "ap-southeast-1"
-  app: "multi-docker"
-  env: "MultiDocker-env"
+  app: "multi-docker-test"
+  env: "MultiDockerTest-env"
   bucket_name: "elasticbeanstalk-ap-southeast-1-433126474652"
-  bucket_path: "multi-docker"
+  bucket_path: "multi-docker-test"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
